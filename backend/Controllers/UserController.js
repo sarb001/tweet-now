@@ -43,6 +43,36 @@ export const UserSignup = async(req,res) => {
 }
 
 
-export const UserLogin = () => {
-   
+export const UserLogin = async(req,res) => {
+    try {
+
+        const {username,password} = req.body;
+        
+        if(!username || !password){
+            return res.status(404).json({
+                message : "Enter All Fields"
+            })
+        }
+        
+        const finduser = await User.findOne({username});
+        console.log('find user= ',finduser);
+
+        if(!finduser){
+            return res.status(400).json({
+                message : " User not Existed "
+            })
+        }
+
+        const matchpass = await bcrypt.compare(password,finduser.password);
+        console.log('matched pass=',matchpass);
+
+        return res.status(200).json({
+            message: "Logged In Successful",
+            finduser
+        })
+
+
+    } catch (error) {
+            console.log('logged eror =',error);
+    }
 }
