@@ -1,4 +1,5 @@
 import User from "../Schema/UserSchema.js";
+import  bcrypt from 'bcrypt';
 
 export const UserSignup = async(req,res) => {
     try {
@@ -13,7 +14,6 @@ export const UserSignup = async(req,res) => {
         }
 
         const checkusername = await User.findOne({username});
-        console.log('check schema =',checkusername);
 
         if(checkusername){
             return res.status(409).status({
@@ -21,10 +21,13 @@ export const UserSignup = async(req,res) => {
             })
         }
 
+        const hashpass = await bcrypt.hash(password,20);
+        console.log('hashpass is =',hashpass);
+
         const user =  await User.create({
             username: username,
             email : email,
-            password : password
+            password : hashpass
         })
 
         console.log('user created =',user);
