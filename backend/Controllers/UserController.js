@@ -43,7 +43,6 @@ export const UserSignup = async(req,res) => {
     }
 }
 
-
 export const UserLogin = async(req,res) => {
     try {
 
@@ -55,29 +54,43 @@ export const UserLogin = async(req,res) => {
             })
         }
         
-        const finduser = await User.findOne({username});
-        console.log('find user= ',finduser);
+        const user = await User.findOne({username});
+        console.log('find user= ',user);
 
-        if(!finduser){
+        if(!user){
             return res.status(400).json({
                 message : " User not Existed "
             })
         }
 
+        const matchpass = await bcrypt.compare(password,user.password);
+        console.log('matched pass=',matchpass);
+
+         if(!matchpass){
+            return res.status(401).json({
+                message : "Password Incorrect"
+            })
+         }
+
         // create token
-        const token = jwt.sign({_id : finduser._id},'secret@123');
+        const token = jwt.sign({_id : user._id},'secret@123');
         console.log('token created=',token);
 
-        const matchpass = await bcrypt.compare(password,finduser.password);
-        console.log('matched pass=',matchpass);
+        // store in cookies
+         res.cookie('token'  , token , {
+            path : '/',
+            maxAge : 60000,
+            secure : true,
+         })
 
         return res.status(200).json({
             message: "Logged In Successful",
-            finduser
+            user,
+            token
         })
-
 
     } catch (error) {
             console.log('logged eror =',error);
     }
 }
+
