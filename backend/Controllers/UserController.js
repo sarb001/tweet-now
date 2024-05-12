@@ -73,14 +73,15 @@ export const UserLogin = async(req,res) => {
          }
 
         // create token
-        const token = jwt.sign({_id : user._id},'secret@123');
+        const token =  jwt.sign({_id : user._id},process.env.JWT_SECRET);
         console.log('token created=',token);
 
         // store in cookies
          res.cookie('token'  , token , {
+            httpOnly : false,
             path : '/',
-            maxAge : 60000,
-            secure : true,
+            maxAge : 24 * 60000,
+           
          })
 
         return res.status(200).json({
@@ -94,3 +95,11 @@ export const UserLogin = async(req,res) => {
     }
 }
 
+export const Profile = async(req,res) => {
+    try {
+        console.log('accesing profile');
+
+    } catch (error) {
+        console.log('profileerro =',error);
+    }
+}
