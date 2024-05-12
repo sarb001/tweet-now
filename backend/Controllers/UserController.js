@@ -1,5 +1,6 @@
 import User from "../Schema/UserSchema.js";
 import  bcrypt from 'bcrypt';
+import jwt  from 'jsonwebtoken' ;
 
 export const UserSignup = async(req,res) => {
     try {
@@ -62,6 +63,10 @@ export const UserLogin = async(req,res) => {
                 message : " User not Existed "
             })
         }
+
+        // create token
+        const token = jwt.sign({_id : finduser._id},'secret@123');
+        console.log('token created=',token);
 
         const matchpass = await bcrypt.compare(password,finduser.password);
         console.log('matched pass=',matchpass);
