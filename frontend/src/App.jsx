@@ -15,6 +15,7 @@ import {  ToastContainer , toast } from 'react-toastify' ;
 import 'react-toastify/ReactToastify.css' ;
 import {  useDispatch, useSelector } from 'react-redux' ;
 import { UserProfile } from './Reducers/UserSlice';
+import { ProtectedRoute } from './Authentication/ProtectedRoute';
 
 function App() {
 
@@ -34,12 +35,29 @@ function App() {
    <Navbar />
       <Routes>
         <Route path='/' element = {<Home />}>  </Route>
-        <Route path='/about' element = {<About />}>  </Route>
-        <Route path='/contact' element = {<Contact />}>  </Route>
+
+        <Route path='/about' element = {
+          <ProtectedRoute>
+            <About />
+          </ProtectedRoute>
+        }>  </Route>
+
+        <Route path='/contact' element = {
+          <ProtectedRoute>
+            <Contact />
+          </ProtectedRoute>
+        }>  </Route>
+
         <Route path='/signup' element = {<Signup />}>  </Route>
         <Route path='/login' element = {<Login />}>  </Route>
-        <Route path='/profile' element = {<Profile />}>  </Route>
-        <Route path='*' element = {<PagenotFound />}>  </Route>
+
+        <Route path='/profile' element = {
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+        }>  </Route>
+
+        <Route path='/*' element = {<PagenotFound />}>  </Route>
      </Routes>
      <ToastContainer  autoClose = {2000} />
 
