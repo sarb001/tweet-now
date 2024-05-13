@@ -1,19 +1,19 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { logoutUser } from '../Reducers/UserSlice';
+import { LogoutUser } from '../Reducers/UserSlice';
 
 const Navbar = () => {
 
     const isAuth = true;
 
-    const { userdata  } = useSelector(state => state?.user);
+    const { userdata } = useSelector(state => state?.user);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const logouthandler = async() => {
-        await  dispatch(logoutUser());
+    const logouthandler = async(req,res) => {
+        await  dispatch(LogoutUser());
         navigate('/login');
     }
  

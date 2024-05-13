@@ -42,7 +42,18 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 })
 
 
-// export const 
+export const LogoutUser = createAsyncThunk('/api/v1/logout' , async(userData, { rejectWithValue }) => {
+    try {
+        
+        const  response = await axios.get('/api/v1/logout',userData);
+        console.log('response =',response);
+        toast.success("User Logged Out");
+        return true;
+
+    } catch (error) {
+        console.log('user logged Out-',error);   
+    }
+})
 
 
 export const UserSlice = createSlice({
