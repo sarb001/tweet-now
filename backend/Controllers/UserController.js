@@ -45,15 +45,15 @@ export const UserSignup = async(req,res) => {
 
 export const UserLogin = async(req,res) => {
     try {
-
         const {username,password} = req.body;
-        
+
         if(!username || !password){
             return res.status(404).json({
                 message : "Enter All Fields"
             })
         }
-        
+
+        // use _id for better speed 
         const user = await User.findOne({username});
         console.log('find user= ',user);
 
@@ -81,7 +81,6 @@ export const UserLogin = async(req,res) => {
             httpOnly : false,
             path : '/',
             maxAge : 24 * 60000,
-           
          })
 
         return res.status(200).json({

@@ -6,6 +6,10 @@ const initialState = {
     loading : false,
     error : false,
     userdata : null,
+
+    loginloader : false,
+    loginerror :false,
+
 }   
 
 export const RegisterUser = createAsyncThunk('/api/v1/signup',async(userData,{rejectWithValue }) => {
@@ -20,6 +24,21 @@ export const RegisterUser = createAsyncThunk('/api/v1/signup',async(userData,{re
     } catch (error) {
             console.log('register user error=',error);
     }
+});
+
+
+export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{rejectWithValue }) => {
+    try {
+        console.log('user data login =',userData);
+        const { username , password } = userData;
+        const response = await axios.post('/api/v1/login',userData);
+        console.log(' login user =' ,response.data.user);
+        toast.success("User Created Successfully");
+        return response.data.user;
+
+    } catch (error) {
+          return  console.log('login user error=',error);
+    }
 })
 
 
@@ -30,6 +49,7 @@ export const UserSlice = createSlice({
         
     },
     extraReducers: (builder) => {
+
         builder.addCase(RegisterUser.pending ,(state,action) => {
             state.loading = true;
         })
@@ -44,7 +64,25 @@ export const UserSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         })
+
+
+        builder.addCase(LoginUser.pending ,(state,action) => {
+            state.loginloader = true;
+        })
+        builder.addCase(LoginUser.fulfilled ,(state,action) => {
+            state.loginloader = false;
+            console.log('action login =',action.payload);
+            state.userdata = action.payload;
+            console.log('action login =',action.payload);
+            state.loginerror = false;
+        })
+        builder.addCase(LoginUser.rejected, (state,action) => {
+            state.loginloader = false;
+            state.loginerror = action.payload;
+        })
+
     }
+
 })
 
 
