@@ -7,8 +7,13 @@ const initialState = {
     error : false,
     userdata : null,
 
+    isAuth :false,
+
     loginloader : false,
     loginerror :false,
+
+    profileloading :false,
+    profileError:false
 
 }   
 
@@ -42,16 +47,14 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 })
 
 
-export const LogoutUser = createAsyncThunk('/api/v1/logout' , async(userData, { rejectWithValue }) => {
-    try {
+export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData , {rejectWithValue }) => {
+    try {   
+        const response = await axios.get('/api/v1/profile' ,userData);
+        console.log(' profile response =',response);
+        return response.data.user;
         
-        const  response = await axios.get('/api/v1/logout',userData);
-        console.log('response =',response);
-        toast.success("User Logged Out");
-        return true;
-
     } catch (error) {
-        console.log('user logged Out-',error);   
+            console.log('user profile =',error);
     }
 })
 
@@ -62,6 +65,7 @@ export const UserSlice = createSlice({
     reducers:{
         logoutUser : (state) => {
             state.userdata = null;
+            state.isAuth = false;
         }
     },
     extraReducers: (builder) => {
@@ -84,16 +88,35 @@ export const UserSlice = createSlice({
 
         builder.addCase(LoginUser.pending ,(state,action) => {
             state.loginloader = true;
+            state.isAuth = false;
         })
         builder.addCase(LoginUser.fulfilled ,(state,action) => {
             state.loginloader = false;
             console.log('action login =',action.payload);
             state.userdata = action.payload;
+            state.isAuth = true;
             console.log('action login =',action.payload);
             state.loginerror = false;
         })
         builder.addCase(LoginUser.rejected, (state,action) => {
             state.loginloader = false;
+            state.isAuth = false;
+            state.loginerror = action.payload;
+        })
+
+        builder.addCase(UserProfile.pending ,(state,action) => {
+            state.profileloading = true;
+            state.isAuth = false;
+        })
+        builder.addCase(UserProfile.fulfilled ,(state,action) => {
+            state.profileloading = false;
+            state.isAuth = true;
+            state.userdata = action.payload;
+            state.loginerror = false;
+        })
+        builder.addCase(UserProfile.rejected, (state,action) => {
+            state.profileloading = false;
+            state.isAuth = false;
             state.loginerror = action.payload;
         })
 

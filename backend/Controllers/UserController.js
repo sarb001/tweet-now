@@ -97,24 +97,22 @@ export const UserLogin = async(req,res) => {
 export const UserLogout = async(req,res) => {
     try {
         res.clearCookie('token');
-        res.send({ success : true , message : "Logged Out" });
+        return  res.send({ success : true , message : "Logged Out" });
 
     } catch (error) {
           return  console.log('user logut error= ',error);
     }
 }
 
-
 export const Profile = async(req,res) => {
     try {
 
         const user = await User.findById({_id :  req.user?._id });
         console.log('user is =',user);
-                //  req.user?._id;
 
-        console.log('accesing profile');
         return res.status(200).json({
-            message: 'got itit'
+            message: 'Profile ',
+            user
         })
 
     } catch (error) {

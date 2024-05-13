@@ -1,22 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { LogoutUser } from '../Reducers/UserSlice';
+import {  UserProfile, logoutUser } from '../Reducers/UserSlice';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
+  
+    const { userdata , isAuth } = useSelector(state => state?.user);
 
-    const isAuth = true;
-
-    const { userdata } = useSelector(state => state?.user);
+    console.log('isAuth =',isAuth);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const logouthandler = async(req,res) => {
-        await  dispatch(LogoutUser());
+    const logouthandler = () => {
+         dispatch(logoutUser());
+        toast.success("Logged Out");
         navigate('/login');
     }
- 
+
+     useEffect(() => {
+       dispatch(UserProfile());
+    },[dispatch])
+
   return (
     <div className='flex justify-between px-8 py-4 bg-slate-400 font-bold '>
           <Link to = "/"> Prettier </Link>

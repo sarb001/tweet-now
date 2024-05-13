@@ -1,4 +1,5 @@
 
+import { useEffect } from 'react';
 import './App.css'
 import About from './components/About';
 import Contact from './components/Contact';
@@ -12,8 +13,21 @@ import Signup from './components/Signup';
 import { Route , Routes } from 'react-router-dom' ;
 import {  ToastContainer , toast } from 'react-toastify' ;
 import 'react-toastify/ReactToastify.css' ;
+import {  useDispatch, useSelector } from 'react-redux' ;
+import { UserProfile } from './Reducers/UserSlice';
 
 function App() {
+
+    const dispatch = useDispatch();
+    
+    const { userdata , isAuth } = useSelector(state => state?.user);
+
+    console.log('isAuth app =',isAuth);
+    console.log('isAuth data =',userdata);
+
+    useEffect(() => {
+       dispatch(UserProfile());
+    },[dispatch])
 
   return (
    <>
