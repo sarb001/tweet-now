@@ -42,11 +42,16 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 })
 
 
+// export const 
+
+
 export const UserSlice = createSlice({
     name : 'userslice',
     initialState,
     reducers:{
-        
+        logoutUser : (state) => {
+            state.userdata = null;
+        }
     },
     extraReducers: (builder) => {
 
@@ -85,5 +90,6 @@ export const UserSlice = createSlice({
 
 })
 
+export const  { logoutUser } = UserSlice.actions;
 
 export default UserSlice.reducer;
