@@ -10,13 +10,15 @@ import Profile from './components/Profile';
 import Signup from './components/Signup';
 
 import { Route , Routes } from 'react-router-dom' ;
+import {  ToastContainer , toast } from 'react-toastify' ;
+import 'react-toastify/ReactToastify.css' ;
 
 function App() {
 
   return (
    <>
    <Navbar />
-     <Routes>
+      <Routes>
         <Route path='/' element = {<Home />}>  </Route>
         <Route path='/about' element = {<About />}>  </Route>
         <Route path='/contact' element = {<Contact />}>  </Route>
@@ -25,6 +27,7 @@ function App() {
         <Route path='/profile' element = {<Profile />}>  </Route>
         <Route path='*' element = {<PagenotFound />}>  </Route>
      </Routes>
+     <ToastContainer  autoClose = {2000} />
 
    </>
   )
