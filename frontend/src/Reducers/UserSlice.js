@@ -54,7 +54,7 @@ export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData ,
         return response.data.user;
         
     } catch (error) {
-            console.log('user profile =',error);
+         return  console.log('user profile =',error);
     }
 })
 
