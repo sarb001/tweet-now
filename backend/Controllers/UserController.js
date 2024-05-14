@@ -78,9 +78,11 @@ export const UserLogin = async(req,res) => {
 
         // store in cookies
          res.cookie('token'  , token , {
-            httpOnly : false,
-            path : '/',
+            httpOnly : true,
+            sameSite : 'None',
+            secure : true,
             maxAge : 24 * 60000,
+            expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
          })
 
         return res.status(200).json({
@@ -96,7 +98,11 @@ export const UserLogin = async(req,res) => {
 
 export const UserLogout = async(req,res) => {
     try {
-        res.clearCookie('token');
+        res.clearCookie('token' , {
+        httpOnly : true,
+        sameSite : 'None',
+        secure : true,
+     });
         return  res.send({ success : true , message : "Logged Out" });
 
     } catch (error) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux' ;
 import { LoginUser } from '../Reducers/UserSlice.js';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link } from 'react-router-dom';
 
 const Login = () => {
 
@@ -55,7 +55,7 @@ const Login = () => {
              </button>
             </div>
             <div>
-             <a className='p-3 bg-black text-white' href= "/signup"> Create New Account  </a>
+             <Link to='/signup' className='p-3 bg-black text-white'> Create New Account </Link>
             </div>
           </div>
         </form>

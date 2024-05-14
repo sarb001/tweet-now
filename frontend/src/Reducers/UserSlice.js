@@ -47,6 +47,18 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 })
 
 
+export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{rejectWithValue }) => {
+    try {
+        console.log('logout userdata =');    
+        const response = await axios.get('/api/v1/logout' , userData);
+        console.log('response =');
+        return true;
+
+    } catch (error) {
+            console.log('logout error user = ',error);
+    }   
+})
+
 export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData , {rejectWithValue }) => {
     try {   
         const response = await axios.get('/api/v1/profile' ,userData);
@@ -63,10 +75,7 @@ export const UserSlice = createSlice({
     name : 'userslice',
     initialState,
     reducers:{
-        logoutUser : (state) => {
-            state.userdata = null;
-            state.isAuth = false;
-        }
+        
     },
     extraReducers: (builder) => {
 
@@ -104,26 +113,38 @@ export const UserSlice = createSlice({
             state.loginerror = action.payload;
         })
 
+        builder.addCase(LogoutUser.pending ,(state,action) => {
+            state.isAuth = true;
+        })
+        builder.addCase(LogoutUser.fulfilled ,(state,action) => {
+            state.userdata = null;
+            state.isAuth = false;
+        })
+        builder.addCase(LogoutUser.rejected, (state,action) => {
+            state.isAuth = false;
+        })
+
+
         builder.addCase(UserProfile.pending ,(state,action) => {
             state.profileloading = true;
-            state.isAuth = false;
         })
         builder.addCase(UserProfile.fulfilled ,(state,action) => {
             state.profileloading = false;
             state.isAuth = true;
+            console.log('action profile =',action.payload);
             state.userdata = action.payload;
-            state.loginerror = false;
+            console.log('action profile =',action.payload);
+            state.profileError = false;
         })
         builder.addCase(UserProfile.rejected, (state,action) => {
             state.profileloading = false;
             state.isAuth = false;
-            state.loginerror = action.payload;
+            state.profileError = action.payload;
         })
 
     }
 
 })
 
-export const  { logoutUser } = UserSlice.actions;
 
 export default UserSlice.reducer;

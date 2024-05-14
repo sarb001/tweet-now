@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux' ;
-import { useNavigate } from 'react-router-dom' ;
+import { useNavigate ,Link  } from 'react-router-dom' ;
 import { RegisterUser } from '../Reducers/UserSlice';
+
 
 const Signup = () => {
 
@@ -66,7 +67,7 @@ const Signup = () => {
                    {loading ? "Creating..." : 'Create an Account' }
                 </button>
                 <div>
-                <a className='p-3 bg-black text-white'  href= "/login"> Login Now </a>
+                <Link  to='/login' className='p-3 bg-black text-white' > Login Now  </Link>
                 </div>
               </div>
               

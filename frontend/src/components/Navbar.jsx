@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import {  UserProfile, logoutUser } from '../Reducers/UserSlice';
+import {  LogoutUser, UserProfile  } from '../Reducers/UserSlice';
 import { toast } from 'react-toastify';
 
 const Navbar = () => {
@@ -9,12 +9,13 @@ const Navbar = () => {
     const { userdata , isAuth } = useSelector(state => state?.user);
 
     console.log('isAuth =',isAuth);
+    console.log('isAuth userdata =',userdata);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const logouthandler = () => {
-         dispatch(logoutUser());
+        dispatch(LogoutUser());
         toast.success("Logged Out");
         navigate('/login');
     }
@@ -30,7 +31,7 @@ const Navbar = () => {
         <Link to = "/about">   About </Link>
         <Link to = "/contact"> Contact </Link>
         <a>
-          { isAuth ? (
+          { userdata ? (
             <>
             <div onClick={logouthandler}> Logout </div>
             </>
