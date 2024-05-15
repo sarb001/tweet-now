@@ -81,7 +81,7 @@ export const UserLogin = async(req,res) => {
             httpOnly : true,
             sameSite : 'None',
             secure : true,
-            maxAge : 24 * 60000,
+            maxAge :  1000 * 60 * 60 * 24 * 7,
             expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7)
          })
 
