@@ -65,9 +65,18 @@ export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{reje
 
 export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData , {rejectWithValue }) => {
     try {   
-        const response = await axios.get('http://localhost:4000/api/v1/profile' ,userData , {
-            withCredentials :true,
+        const response = await axios.get('http://localhost:4000/api/v1/profile' , {
+            headers :{
+                'Content-Type' : 'application/json',
+            },
+            withCredentials : true,
+            params : userData
         });
+
+        // const response = await axios.get('http://localhost:4000/api/v1/profile' ,userData , {
+        //     withCredentials :true,
+            
+        // });
         console.log(' profile response =',response);
         return response.data.user;
         
