@@ -21,7 +21,13 @@ export const RegisterUser = createAsyncThunk('/api/v1/signup',async(userData,{re
     try {
         console.log('user data =',userData);
         const { username,email,password } = userData;
-        const response = await axios.post('http://localhost:4000/api/v1/signup',userData);
+        const response = await axios.post('http://localhost:4000/api/v1/signup',{
+                headers :{
+                    'Content-Type' : 'application/json',
+                },
+                withCredentials : true,
+                params : userData,
+            });
         console.log('user resp =',response.data.user);
         toast.success("User Created Successfully");
         return true;
@@ -37,7 +43,7 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
         console.log('user data login =',userData);
         const { username , password } = userData;
         const response = await axios.post('http://localhost:4000/api/v1/login',userData ,{
-            withCredentials :true,
+            withCredentials : true,
         });
         console.log(' login user =' ,response.data.user);
         toast.success("User Created Successfully");
@@ -52,8 +58,12 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{rejectWithValue }) => {
     try {
         console.log('logout userdata =');    
-        const response = await axios.get('http://localhost:4000/api/v1/logout' , userData ,{
-            withCredentials :true,
+        const response = await axios.get('http://localhost:4000/api/v1/logout' ,{
+            headers :{
+                'Content-Type' : 'application/json',
+            },
+            withCredentials : true,
+            params : userData
         });
         console.log('response =');
         return true;
@@ -73,10 +83,6 @@ export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData ,
             params : userData
         });
 
-        // const response = await axios.get('http://localhost:4000/api/v1/profile' ,userData , {
-        //     withCredentials :true,
-            
-        // });
         console.log(' profile response =',response);
         return response.data.user;
         

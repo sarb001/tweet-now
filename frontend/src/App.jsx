@@ -27,7 +27,9 @@ function App() {
     console.log('isAuth data =',userdata);
 
     useEffect(() => {
-       dispatch(UserProfile());
+       if(!userdata){
+         dispatch(UserProfile());
+        }
     },[dispatch])
 
   return (
