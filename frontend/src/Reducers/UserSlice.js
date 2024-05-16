@@ -105,9 +105,9 @@ export const UserSlice = createSlice({
         })
         builder.addCase(RegisterUser.fulfilled ,(state,action) => {
             state.loading = false;
-            console.log('action 1 =',action.payload);
+            // console.log('action 1 =',action.payload);
             state.userdata = action.payload;
-            console.log('action 2 =',action.payload);
+            // console.log('action 2 =',action.payload);
             state.error = false;
         })
         builder.addCase(RegisterUser.rejected, (state,action) => {
@@ -122,10 +122,10 @@ export const UserSlice = createSlice({
         })
         builder.addCase(LoginUser.fulfilled ,(state,action) => {
             state.loginloader = false;
-            console.log('action login =',action.payload);
+            // console.log('action login =',action.payload);
             state.userdata = action.payload;
             state.isAuth = true;
-            console.log('action login =',action.payload);
+            // console.log('action login =',action.payload);
             state.loginerror = false;
         })
         builder.addCase(LoginUser.rejected, (state,action) => {
@@ -152,9 +152,9 @@ export const UserSlice = createSlice({
         builder.addCase(UserProfile.fulfilled ,(state,action) => {
             state.profileloading = false;
             state.isAuth = true;
-            console.log('action profile =',action.payload);
+            // console.log('action profile =',action.payload);
             state.userdata = action.payload;
-            console.log('action profile =',action.payload);
+            // console.log('action profile =',action.payload);
             state.profileError = false;
         })
         builder.addCase(UserProfile.rejected, (state,action) => {

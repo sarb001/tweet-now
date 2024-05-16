@@ -8,6 +8,8 @@ export const ProtectedRoute = ({children}) => {
 
      const location = useLocation();
 
+     console.log('inside  Routeeeeeeeeee ===');
+
     return userdata ? (
         children 
     ): ( 
