@@ -21,7 +21,7 @@ export const RegisterUser = createAsyncThunk('/api/v1/signup',async(userData,{re
     try {
         console.log('user data =',userData);
         const { username,email,password } = userData;
-        const response = await axios.post('/api/v1/signup',userData);
+        const response = await axios.post('http://localhost:4000/api/v1/signup',userData);
         console.log('user resp =',response.data.user);
         toast.success("User Created Successfully");
         return true;
@@ -36,7 +36,7 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
     try {
         console.log('user data login =',userData);
         const { username , password } = userData;
-        const response = await axios.post('/api/v1/login',userData ,{
+        const response = await axios.post('http://localhost:4000/api/v1/login',userData ,{
             withCredentials :true,
         });
         console.log(' login user =' ,response.data.user);
@@ -52,7 +52,7 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{rejectWithValue }) => {
     try {
         console.log('logout userdata =');    
-        const response = await axios.get('/api/v1/logout' , userData ,{
+        const response = await axios.get('http://localhost:4000/api/v1/logout' , userData ,{
             withCredentials :true,
         });
         console.log('response =');
@@ -65,7 +65,7 @@ export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{reje
 
 export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData , {rejectWithValue }) => {
     try {   
-        const response = await axios.get('/api/v1/profile' ,userData , {
+        const response = await axios.get('http://localhost:4000/api/v1/profile' ,userData , {
             withCredentials :true,
         });
         console.log(' profile response =',response);
