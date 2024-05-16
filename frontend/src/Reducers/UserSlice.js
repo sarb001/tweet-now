@@ -22,7 +22,7 @@ export const RegisterUser = createAsyncThunk('/api/v1/signup',async(userData,{re
         console.log('user data =',userData);
         const { username,email,password } = userData;
 
-        const response = await axios.post(`${import.meta.env.API_URL}/api/v1/signup`,{
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/signup`,{
                 headers :{
                     'Content-Type' : 'application/json',
                 },
@@ -43,7 +43,7 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
     try {
         console.log('user data login =',userData);
         const { username , password } = userData;
-        const response = await axios.post(`${import.meta.env.API_URL}/api/v1/login`,userData ,{
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/login`,userData ,{
             withCredentials : true,
         });
         console.log(' login user =' ,response.data.user);
@@ -59,7 +59,7 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{rejectWithValue }) => {
     try {
         console.log('logout userdata =');    
-        const response = await axios.get(`${import.meta.env.API_URL}/api/v1/logout` ,{
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/logout` ,{
             headers :{
                 'Content-Type' : 'application/json',
             },
@@ -76,7 +76,7 @@ export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{reje
 
 export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData , {rejectWithValue }) => {
     try {   
-        const response = await axios.get(`${import.meta.env.API_URL}/api/v1/profile` , {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/profile` , {
             headers :{
                 'Content-Type' : 'application/json',
             },
