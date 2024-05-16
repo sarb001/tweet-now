@@ -13,3 +13,4 @@ export default defineConfig({
     }
   }
 })
+// removing proxy use cors in production
