@@ -21,7 +21,14 @@ export const RegisterUser = createAsyncThunk('/api/v1/signup',async(userData,{re
     try {
         console.log('user data =',userData);
         const { username,email,password } = userData;
-        const response = await axios.post('/api/v1/signup',userData);
+
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/signup`,{
+                headers :{
+                    'Content-Type' : 'application/json',
+                },
+                withCredentials : true,
+                params : userData,
+            });
         console.log('user resp =',response.data.user);
         toast.success("User Created Successfully");
         return true;
@@ -36,7 +43,9 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
     try {
         console.log('user data login =',userData);
         const { username , password } = userData;
-        const response = await axios.post('/api/v1/login',userData);
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v1/login`,userData ,{
+            withCredentials : true,
+        });
         console.log(' login user =' ,response.data.user);
         toast.success("User Created Successfully");
         return response.data.user;
@@ -50,7 +59,13 @@ export const LoginUser = createAsyncThunk('/api/v1/login',async(userData,{reject
 export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{rejectWithValue }) => {
     try {
         console.log('logout userdata =');    
-        const response = await axios.get('/api/v1/logout' , userData);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/logout` ,{
+            headers :{
+                'Content-Type' : 'application/json',
+            },
+            withCredentials : true,
+            params : userData
+        });
         console.log('response =');
         return true;
 
@@ -61,7 +76,14 @@ export const LogoutUser = createAsyncThunk('/api/v1/logout',async(userData,{reje
 
 export const UserProfile = createAsyncThunk('/api/v1/profile' ,async (userData , {rejectWithValue }) => {
     try {   
-        const response = await axios.get('/api/v1/profile' ,userData);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/api/v1/profile` , {
+            headers :{
+                'Content-Type' : 'application/json',
+            },
+            withCredentials : true,
+            params : userData
+        });
+
         console.log(' profile response =',response);
         return response.data.user;
         
@@ -84,9 +106,7 @@ export const UserSlice = createSlice({
         })
         builder.addCase(RegisterUser.fulfilled ,(state,action) => {
             state.loading = false;
-            console.log('action 1 =',action.payload);
             state.userdata = action.payload;
-            console.log('action 2 =',action.payload);
             state.error = false;
         })
         builder.addCase(RegisterUser.rejected, (state,action) => {
@@ -101,10 +121,8 @@ export const UserSlice = createSlice({
         })
         builder.addCase(LoginUser.fulfilled ,(state,action) => {
             state.loginloader = false;
-            console.log('action login =',action.payload);
             state.userdata = action.payload;
             state.isAuth = true;
-            console.log('action login =',action.payload);
             state.loginerror = false;
         })
         builder.addCase(LoginUser.rejected, (state,action) => {
@@ -131,9 +149,7 @@ export const UserSlice = createSlice({
         builder.addCase(UserProfile.fulfilled ,(state,action) => {
             state.profileloading = false;
             state.isAuth = true;
-            console.log('action profile =',action.payload);
             state.userdata = action.payload;
-            console.log('action profile =',action.payload);
             state.profileError = false;
         })
         builder.addCase(UserProfile.rejected, (state,action) => {

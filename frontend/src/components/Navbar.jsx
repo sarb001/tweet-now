@@ -21,6 +21,7 @@ const Navbar = () => {
     }
 
      useEffect(() => {
+        console.log('making profile --');
        dispatch(UserProfile());
     },[dispatch])
 
