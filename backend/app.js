@@ -3,6 +3,7 @@ import { connectDb } from './Database/Db.js';
 import dotenv from 'dotenv' ;
 import user from './Routes/UserRoute.js';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 const app = express();
 
@@ -12,6 +13,12 @@ app.use(cookieParser());
 
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+
+app.use(cors({
+    origin : process.env.FRONTEND_URL,
+    credentials :true,
+}))
+
 
 app.use('/api/v1' ,user);
 

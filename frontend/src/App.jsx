@@ -22,13 +22,17 @@ function App() {
     const dispatch = useDispatch();
     
     const { userdata , isAuth } = useSelector(state => state?.user);
+    
+    useEffect(() => {
+       if(!userdata){
+         dispatch(UserProfile());
+        }
+    },[userdata])
+
 
     console.log('isAuth app =',isAuth);
     console.log('isAuth data =',userdata);
 
-    useEffect(() => {
-       dispatch(UserProfile());
-    },[dispatch])
 
   return (
    <>
